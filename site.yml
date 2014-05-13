@@ -1,0 +1,8 @@
+---
+# The playbook to deploy a server installation of Chipster
+- hosts: chiphosts
+  user: ubuntu
+  sudo: yes
+  roles:
+    - common
+    - chipster

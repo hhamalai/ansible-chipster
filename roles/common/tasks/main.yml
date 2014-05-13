@@ -1,0 +1,34 @@
+---
+- name: Apache | get iptables rules
+  shell: iptables -L
+  register: iptablesrules
+  always_run: yes
+  sudo: true
+
+- name: Apache | add chipster message broker iptables rule
+  command: /sbin/iptables -I INPUT 1 -p tcp --dport 61616 -j ACCEPT -m comment --comment "Chipster Message Broker"
+  sudo: true
+  when: iptablesrules.stdout.find("Chipster Message Broker") == -1
+
+- name: Apache | add chipster file broker iptables rule
+  command: /sbin/iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT -m comment --comment "Chipster File Broker"
+  sudo: true
+  when: iptablesrules.stdout.find("Chipster File Broker") == -1
+
+- name: Apache | add chipster webstart iptables rule
+  command: /sbin/iptables -I INPUT 1 -p tcp --dport 8081 -j ACCEPT -m comment --comment "Chipster WebStart"
+  sudo: true
+  when: iptablesrules.stdout.find("Chipster WebStart") == -1
+
+- name: Apache | add chipster admin web iptables rule
+  command: /sbin/iptables -I INPUT 1 -p tcp --dport 8082 -j ACCEPT -m comment --comment "Chipster Admin Web"
+  sudo: true
+  when: iptablesrules.stdout.find("Chipster Admin Web") == -1
+
+- name: save iptables
+  command: iptables-save
+  sudo: true
+
+- name: restart iptables
+  service: name=ufw state=restarted
+  sudo: true
