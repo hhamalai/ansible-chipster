@@ -3,6 +3,7 @@
 - hosts: chiphosts
   user: ubuntu
   sudo: yes
+  http_proxy: http://192.168.15.254:3128
   vars:
     chipster_build: "0"
     chipster_version: "3.0.0"

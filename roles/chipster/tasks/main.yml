@@ -4,6 +4,13 @@
   with_items:
     - openjdk-7-jdk
     - nfs-common
+    - ant
+    - git
+  register: pkg_install_changed
+
+- name: set java link
+  command: update-java-alternatives -s java-1.7.0-openjdk-amd64
+  when: pkg_install_changed
 
 - name: download Chipster
   get_url: url={{ chipster_url }} dest=/tmp/chipster-{{ chipster_build }}.tar.gz
@@ -22,8 +29,6 @@
 
 - name: symlink /mnt/tools as /opt/chipster/tools
   file: src=/mnt/tools dest=/opt/chipster/tools state=link force=yes
-
-
 
 - name: start Chipster
   command: creates=/var/lock/subsys/chipster-comp creates=/var/lock/subsys/chipster-auth creates=/var/lock/subsys/chipster-webstart creates=/var/lock/subsys/chipster-fileserver  chdir=/opt/chipster ./chipster start
