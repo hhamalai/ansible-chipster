@@ -3,8 +3,10 @@
 - hosts: chiphosts
   user: ubuntu
   sudo: yes
-  http_proxy: http://192.168.15.254:3128
+
   vars:
+    proxy_env:
+      http_proxy: http://192.168.15.254:3128
     chipster_build: "0"
     chipster_version: "3.0.0"
     chipster_url: "http://192.168.15.254/artefacts/chipster/{{ chipster_build }}/chipster-{{ chipster_version }}.tar.gz"

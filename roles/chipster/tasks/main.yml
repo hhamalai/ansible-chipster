@@ -7,6 +7,7 @@
     - ant
     - git
   register: pkg_install_changed
+  environment: proxy_env
 
 - name: set java link
   command: update-java-alternatives -s java-1.7.0-openjdk-amd64
@@ -14,6 +15,7 @@
 
 - name: download Chipster
   get_url: url={{ chipster_url }} dest=/tmp/chipster-{{ chipster_build }}.tar.gz
+  environment: proxy_env
 
 - name: extract Chipster
   command: creates=/opt/chipster /bin/tar xfz /tmp/chipster-{{ chipster_build }}.tar.gz -C /opt
