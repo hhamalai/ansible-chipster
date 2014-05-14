@@ -21,7 +21,7 @@
   command: creates=/opt/chipster /bin/tar xfz /tmp/chipster-{{ chipster_build }}.tar.gz -C /opt
 
 - name: configure Chipster
-  command: chdir=/opt/chipster ./configure.sh `hostname -I`
+  shell: chdir=/opt/chipster ./configure.sh `hostname -I`
 
 - name: generate password for Chipster
   command: chdir=/opt/chipster echo "yes" |./genpassword.sh
