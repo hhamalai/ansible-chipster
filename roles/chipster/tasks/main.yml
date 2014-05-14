@@ -7,6 +7,8 @@
     - ant
     - git
   register: pkg_install_changed
+  update_cache: yes
+  cache_valid_time: 3600
   environment: proxy_env
 
 - name: set java link
