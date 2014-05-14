@@ -18,7 +18,7 @@
   command: chdir=/opt/chipster echo "yes" |./genpassword.sh
 
 - name: symlink /mnt/artefacts/build_tools as /mnt/tools
-  file: src=/mnt/artefacts/build_tools/{{ tools_build }} dest=/mnt/tools state=link force=yes
+  file: src=/mnt/artefacts/build_tools/{{ tools_build }} dest=/mnt/tools state=link
 
 - name: symlink /mnt/tools as /opt/chipster/tools
   file: src=/mnt/tools dest=/opt/chipster/tools state=link force=yes
