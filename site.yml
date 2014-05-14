@@ -3,6 +3,12 @@
 - hosts: chiphosts
   user: ubuntu
   sudo: yes
+  vars:
+    chipster_build: "0"
+    chipster_version: "3.0.0"
+    chipster_url: "http://192.168.15.254/artefacts/chipster/{{ chipster_build }}/chipster-{{ chipster_version }}.tar.gz"
+    tools_build: "54"
+    tools_url: "http://192.168.15.254/artefacts/build_tools/{{ tools_build }}/"
   roles:
     - common
     - chipster

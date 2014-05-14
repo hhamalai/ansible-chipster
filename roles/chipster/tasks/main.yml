@@ -6,10 +6,10 @@
     - nfs-common
 
 - name: download Chipster
-  get_url: url=http://www.nic.funet.fi/pub/sci/molbio/chipster/dist/versions/2.3.0/chipster-2.3.0.tar.gz dest=/opt mode=0440
+  get_url: url={{ chipster_url }} dest=/tmp/chipster-{{ chipster_build }}.tar.gz
 
 - name: extract Chipster
-  command: creates=/opt/chipster /bin/tar xfz /opt/chipster-2.3.0.tar.gz -C /opt
+  command: creates=/opt/chipster /bin/tar xfz /tmp/chipster-{{ chipster_build }}.tar.gz -C /opt
 
 - name: configure Chipster
   command: creates=/opt/chipster/comp/conf/chipster-config.xml chdir=/opt/chipster ./configure.sh `hostname -I`
@@ -17,8 +17,13 @@
 - name: generate password for Chipster
   command: chdir=/opt/chipster echo "yes" |./genpassword.sh
 
-- name: create symlink for Chipster tools
-  file: src=/mnt/tools dest=/opt/chipster/tools state=link
+- name: symlink /mnt/artefacts/build_tools as /mnt/tools
+  file: src=/mnt/artefacts/build_tools/{{ tools_build }} dest=/mnt/tools state=link force=yes
+
+- name: symlink /mnt/tools as /opt/chipster/tools
+  file: src=/mnt/tools dest=/opt/chipster/tools state=link force=yes
+
+
 
 - name: start Chipster
   command: creates=/var/lock/subsys/chipster-comp creates=/var/lock/subsys/chipster-auth creates=/var/lock/subsys/chipster-webstart creates=/var/lock/subsys/chipster-fileserver  chdir=/opt/chipster ./chipster start
