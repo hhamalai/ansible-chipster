@@ -1,14 +1,12 @@
 ---
 - name: install dependencies
-  apt: pkg={{ item }} state=present
+  apt: pkg={{ item }} state=present  update_cache=yes   cache_valid_time=3600
   with_items:
     - openjdk-7-jdk
     - nfs-common
     - ant
     - git
   register: pkg_install_changed
-  update_cache: yes
-  cache_valid_time: 3600
   environment: proxy_env
 
 - name: set java link
