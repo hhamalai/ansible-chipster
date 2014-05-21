@@ -13,5 +13,4 @@
     tools_build: "54"
     tools_url: "http://192.168.15.254/artefacts/build_tools/{{ tools_build }}/"
   roles:
-    - common
     - chipster
